@@ -15,31 +15,31 @@ import {
   ScrollView,
   ListView,
 } from 'react-native';
+import { Button } from 'native-base'
 
 class ListViewBasics extends Component {
   constructor(props) {
     super(props)
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
     this.state = {
-        dataSource: ''
+      dataSource: ds.cloneWithRows(['hello'])
     }
   }
 
-  componentWillMount(){
+  componentWillMount() {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 
     this.fetchMovies()
     .then(res => res.json())
     .then(data => {
-      let arr = data.movies.map(movie => `${movie.title}`)
+      let arr = data.movies.map(movie => <Button block>{movie.title}</Button>)
       console.log(arr)
-      // this.setState({
-      //   dataSource: ds.cloneWithRows(arr)
-      // })
+      this.setState({
+        dataSource: ds.cloneWithRows(arr)
+      })
     })
     .catch(console.error)
-    this.setState({
-      dataSource: ds.cloneWithRows(['hello', 'from', 'my', 'code', 'omdom'])
-    })
+
   }
 
   render() {

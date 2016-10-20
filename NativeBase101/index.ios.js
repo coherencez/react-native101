@@ -5,13 +5,18 @@
  */
 
 import React, { Component } from 'react';
-import { AppRegistry, Text, StyleSheet } from 'react-native';
+import { AppRegistry, Text, StyleSheet, ScrollView } from 'react-native';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Icon, Card, CardItem } from 'native-base';
+import { Router, Scene, Actions } from 'react-native-router-flux';
 
-export default class NativeBase101 extends Component {
+class App extends Component {
     render() {
+      const goToPageOne = () => {
+        Actions.pageTwo({text: 'Hello From App/Root component!'})
+        console.log('HELLO FROM APP')
+      };
         return (
-            <Container>
+            <Container style={styles.container}>
                 <Header style={styles.purple}>
                   <Button transparent>
                       <Icon name='ios-arrow-back' />
@@ -34,7 +39,7 @@ export default class NativeBase101 extends Component {
                   <Button block danger> Danger </Button>
                   <Card>
                         <CardItem header>
-                            <Text>Card Header</Text>
+                            <Text onClick={goToPageOne}>Card Header</Text>
                         </CardItem>
 
                         <CardItem>
@@ -61,6 +66,22 @@ export default class NativeBase101 extends Component {
     }
 }
 
+import PageOne from './PageOne';
+import PageTwo from './PageTwo';
+
+export default class NativeBase101 extends Component {
+  render() {
+    return (
+      <Router>
+        <Scene key="root" >
+          <Scene key="pageOne" component={PageOne} title="PageOne" initial={true} navigationBarStyle={styles.navigationBarStyle}/>
+          <Scene key="pageTwo" component={PageTwo} title="PageTwo" navigationBarStyle={styles.navigationBarStyle}/>
+        </Scene>
+      </Router>
+    )
+  }
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -80,7 +101,10 @@ const styles = StyleSheet.create({
   },
   purple: {
     backgroundColor: 'purple'
-  }
+  },
+  navigationBarStyle: {
+    backgroundColor: 'purple',
+  },
 });
 
 AppRegistry.registerComponent('NativeBase101', () => NativeBase101);
