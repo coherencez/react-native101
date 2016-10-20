@@ -232,7 +232,6 @@ const styles = StyleSheet.create({
     color: '#45ff23',
   },
   scrollview: {
-    height: 400,
     width: 250,
     backgroundColor: '#666fff',
     marginLeft: 50,
